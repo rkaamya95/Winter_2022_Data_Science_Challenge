@@ -1,0 +1,10 @@
+Think about what could be going wrong with our calculation. Think about a better way to evaluate this data. 
+
+The average order value of $3145.13 is calculated by dividing the sum of order_amount by the number of items (in the case of this dataset, it is 5000)
+instead of sum(total_items) and that gives an incorrect Average Order Value.
+
+What metric would you report for this dataset?
+Average Order Value : Sum(order_amount) / Sum(total_items)
+
+What is its value?
+Average Order Value (AOV) : $357.92
