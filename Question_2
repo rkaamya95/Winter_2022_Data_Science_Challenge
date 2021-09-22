@@ -1,0 +1,41 @@
+How many orders were shipped by Speedy Express in total?
+
+Query : SELECT count(distinct orderid) as Total_orders_shipped from orders where shipperid in (select shipperid from shippers where shippername="Speedy Express");
+
+Output : 
+Total_orders_shipped
+54
+
+
+
+What is the last name of the employee with the most orders?
+
+Query : 
+with cte as
+(select employeeid, count(orderid) as total_orders from orders group by employeeid order by total_orders desc)
+
+select lastname from employees where employeeid in (select employeeid from cte where total_orders in (select max(total_orders) from cte))
+
+Output :
+LastName
+Peacock
+
+
+What product was ordered the most by customers in Germany?
+
+Query:
+with cte as
+(SELECT * FROM [OrderDetails] where orderid in (select orderid from orders where customerid in (select customerid from customers where country="Germany") order by customerid) order by productid)
+
+select p.productname, sum(a.quantity) as total_count_of_product_ordered from cte a, products p
+where p.productid=a.productid
+group by a.productid
+order by total_count_of_product_ordered desc
+limit 1
+
+Output:
+ProductName
+total_count_of_product_ordered
+Boston Crab Meat
+160
+
